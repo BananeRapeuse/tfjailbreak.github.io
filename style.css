@@ -1,25 +1,31 @@
 body {
     background-color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     margin: 0;
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .container {
-    text-align: center;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .logo {
-    /* Aucun redimensionnement nécessaire */
+    position: absolute;
+    top: 0;
+    left: 200px;
 }
 
 .jailbreak-button {
-    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 150px;
     height: 50px;
     background-color: red;
@@ -27,25 +33,25 @@ body {
     border: none;
     border-radius: 5px;
     font-size: 18px;
-    margin: 20px 0;
     cursor: pointer;
 }
 
 .progress-container {
+    position: absolute;
+    top: 0;
+    left: -200px;
     width: 120px; /* Largeur de la barre de progression */
     height: 230px; /* Hauteur de la barre de progression */
     background-color: #e0e0e0;
+    border: 2px solid black; /* Contour noir */
     border-radius: 25px;
-    margin: 20px 0;
-    display: none; /* Masqué par défaut */
     overflow: hidden; /* Pour s'assurer que la barre de progression ne dépasse pas les limites */
-    position: relative;
+    display: none;
+    justify-content: flex-end;
 }
 
 .progress-bar {
     width: 100%; /* La barre de progression remplit toute la largeur */
     height: 0; /* Commence à 0% de hauteur */
     background-color: green;
-    position: absolute;
-    bottom: 0; /* Pour commencer à remplir du bas vers le haut */
 }
