@@ -15,7 +15,7 @@ body {
 }
 
 .logo {
-    /* No need to specify width and height anymore */
+    /* Aucun redimensionnement nécessaire */
 }
 
 .jailbreak-button {
@@ -32,16 +32,17 @@ body {
 }
 
 .progress-container {
-    width: 80%;
+    width: 120px; /* Largeur de la barre de progression */
+    height: 230px; /* Hauteur de la barre de progression */
     background-color: #e0e0e0;
     border-radius: 25px;
     margin: 20px 0;
     display: none;
+    overflow: hidden; /* Pour s'assurer que la barre de progression ne dépasse pas les limites */
 }
 
 .progress-bar {
-    width: 0;
-    height: 25px;
+    width: 100%; /* La barre de progression remplit toute la largeur */
+    height: 0; /* Commence à 0% de hauteur */
     background-color: green;
-    border-radius: 25px;
 }
