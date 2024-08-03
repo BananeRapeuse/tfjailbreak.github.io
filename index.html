@@ -88,8 +88,9 @@
             white-space: pre;
             position: absolute;
             top: 0;
-            right: 0;
+            left: 0;
             padding: 20px;
+            font-size: 12px;
         }
     </style>
 </head>
@@ -104,7 +105,7 @@
         <button id="installCydiaButton">Install Cydia 2</button>
     </div>
     <div class="black-background" id="blackScreen">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuQRK2-RpRJ6kT9OQVTPmm4viV9ispwb8bxg&s" alt="Logo" id="blackScreenLogo">
+        <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2371.jpeg" alt="Logo" id="blackScreenLogo">
         <div class="code-lines" id="codeLines"></div>
     </div>
 
@@ -157,6 +158,7 @@
             const blackScreen = document.getElementById('blackScreen');
             const statusMessage = document.getElementById('statusMessage');
             const codeLines = document.getElementById('codeLines');
+            const blackScreenLogo = document.getElementById('blackScreenLogo');
 
             let countdown = 10;
             const countdownInterval = setInterval(() => {
@@ -168,9 +170,9 @@
                     blackScreen.style.display = 'flex';
 
                     setTimeout(() => {
-                        const blackScreenLogo = document.getElementById('blackScreenLogo');
                         blackScreenLogo.style.opacity = 1;
                         setTimeout(() => {
+                            blackScreenLogo.src = 'https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2372.jpeg';
                             let lineCount = 0;
                             const codeInterval = setInterval(() => {
                                 codeLines.textContent += 'test\n';
@@ -179,8 +181,8 @@
                                     clearInterval(codeInterval);
                                 }
                             }, 2000);
-                        }, 5000); // Show logo after 5 seconds
-                    }, 0);
+                        }, 13000); // Show words after 20 seconds from black screen display
+                    }, 7000); // Show logo after 7 seconds
                 }
             }, 1000);
         });
