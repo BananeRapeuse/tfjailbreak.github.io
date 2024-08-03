@@ -78,10 +78,18 @@
         .black-background img {
             width: 150px;
             margin-bottom: 20px;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
         }
         .code-lines {
             margin-top: 20px;
             font-family: monospace;
+            text-align: left;
+            white-space: pre;
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 20px;
         }
     </style>
 </head>
@@ -95,9 +103,9 @@
     <div class="status-message hidden" id="installCydiaMessage">
         <button id="installCydiaButton">Install Cydia 2</button>
     </div>
-    <div class="black-background hidden" id="blackScreen">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuQRK2-RpRJ6kT9OQVTPmm4viV9ispwb8bxg&s" alt="Logo">
-        <div class="code-lines" id="codeLines">test</div>
+    <div class="black-background" id="blackScreen">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuQRK2-RpRJ6kT9OQVTPmm4viV9ispwb8bxg&s" alt="Logo" id="blackScreenLogo">
+        <div class="code-lines" id="codeLines"></div>
     </div>
 
     <script>
@@ -150,28 +158,29 @@
             const statusMessage = document.getElementById('statusMessage');
             const codeLines = document.getElementById('codeLines');
 
-            statusMessage.textContent = 'Your iPhone will reboot in 10 seconds to completely finish the jailbreak';
-            blackScreen.style.display = 'flex';
-
             let countdown = 10;
             const countdownInterval = setInterval(() => {
-                statusMessage.textContent = `Your iPhone will reboot in ${countdown} seconds`;
+                statusMessage.textContent = `Your iPhone will reboot in ${countdown} seconds to completely finish the jailbreak`;
                 countdown -= 1;
                 if (countdown < 0) {
                     clearInterval(countdownInterval);
                     statusMessage.style.display = 'none';
-                    codeLines.textContent = ''; // Clear existing text
+                    blackScreen.style.display = 'flex';
 
-                    // Code line simulation
-                    const codeInterval = setInterval(() => {
-                        codeLines.textContent = codeLines.textContent === 'test' ? '' : 'test';
-                    }, 2000);
-
-                    // After some time, hide the black screen
                     setTimeout(() => {
-                        clearInterval(codeInterval);
-                        blackScreen.style.display = 'none';
-                    }, 20000); // Display for 20 seconds
+                        const blackScreenLogo = document.getElementById('blackScreenLogo');
+                        blackScreenLogo.style.opacity = 1;
+                        setTimeout(() => {
+                            let lineCount = 0;
+                            const codeInterval = setInterval(() => {
+                                codeLines.textContent += 'test\n';
+                                lineCount++;
+                                if (lineCount >= 10) { // Stop after 10 lines for demonstration
+                                    clearInterval(codeInterval);
+                                }
+                            }, 2000);
+                        }, 5000); // Show logo after 5 seconds
+                    }, 0);
                 }
             }, 1000);
         });
