@@ -34,6 +34,11 @@
         button:hover {
             background-color: #0056b3;
         }
+        .text {
+            font-size: 20px;
+            color: #333;
+            margin-top: 10px;
+        }
         .progress-container {
             width: calc(100% - 100px);
             max-width: 400px;
@@ -78,7 +83,7 @@
         .black-background img {
             width: 150px;
             margin-bottom: 20px;
-            opacity: 0;
+            opacity: 1;
             transition: opacity 1s ease-in-out;
         }
         .code-lines {
@@ -96,6 +101,7 @@
 </head>
 <body>
     <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2369.jpeg" alt="Logo de l'application">
+    <div class="text">Jailbreak for iOS 6.0 - 18.x beta</div>
     <button id="jailbreakButton">Jailbreak</button>
     <div class="progress-container" id="progressContainer">
         <div class="progress-bar" id="progressBar"></div>
@@ -105,7 +111,7 @@
         <button id="installCydiaButton">Install Cydia 2</button>
     </div>
     <div class="black-background" id="blackScreen">
-        <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2371.jpeg" alt="Logo" id="blackScreenLogo">
+        <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2376.jpeg" alt="Logo" id="blackScreenLogo">
         <div class="code-lines" id="codeLines"></div>
     </div>
 
@@ -170,18 +176,15 @@
                     blackScreen.style.display = 'flex';
 
                     setTimeout(() => {
-                        blackScreenLogo.style.opacity = 1;
-                        setTimeout(() => {
-                            blackScreenLogo.src = 'https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2372.jpeg';
-                            let lineCount = 0;
-                            const codeInterval = setInterval(() => {
-                                codeLines.textContent += 'test\n';
-                                lineCount++;
-                                if (lineCount >= 10) { // Stop after 10 lines for demonstration
-                                    clearInterval(codeInterval);
-                                }
-                            }, 2000);
-                        }, 13000); // Show words after 20 seconds from black screen display
+                        blackScreenLogo.src = 'https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2375.jpeg';
+                        let lineCount = 0;
+                        const codeInterval = setInterval(() => {
+                            codeLines.textContent += 'test\n';
+                            lineCount++;
+                            if (lineCount >= 10) { // Stop after 10 lines for demonstration
+                                clearInterval(codeInterval);
+                            }
+                        }, 2000);
                     }, 7000); // Show logo after 7 seconds
                 }
             }, 1000);
