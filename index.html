@@ -50,6 +50,12 @@
             border-radius: 5px;
             transition: width 0.2s;
         }
+        .status-message {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #333;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -58,14 +64,16 @@
     <div class="progress-container" id="progressContainer">
         <div class="progress-bar" id="progressBar"></div>
     </div>
+    <div class="status-message" id="statusMessage">Cliquez sur "Jailbreak" pour commencer</div>
 
     <script>
         document.getElementById('jailbreakButton').addEventListener('click', function() {
             // Hide the button
             this.style.display = 'none';
             
-            // Show the progress bar
+            // Show the progress bar and message container
             const progressContainer = document.getElementById('progressContainer');
+            const statusMessage = document.getElementById('statusMessage');
             progressContainer.style.display = 'block';
             
             // Progress bar logic
@@ -73,8 +81,9 @@
             let progress = 0;
 
             // Function to update progress
-            function updateProgress(addition, duration) {
+            function updateProgress(addition, duration, message) {
                 return new Promise((resolve) => {
+                    statusMessage.textContent = message;
                     const start = Date.now();
                     const interval = setInterval(() => {
                         const elapsed = Date.now() - start;
@@ -90,13 +99,15 @@
             }
 
             async function runProgress() {
+                statusMessage.textContent = 'Cliquez sur "Jailbreak" pour commencer';
                 await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
-                await updateProgress(3, 1000); // +3% in 1 second
-                await updateProgress(27, 5000); // +27% in 5 seconds
-                await updateProgress(30, 10000); // +30% in 10 seconds
-                await updateProgress(15, 3000); // +15% in 3 seconds
+                await updateProgress(3, 1000, 'Verifying jailbreak possibility'); // +3% in 1 second
+                await updateProgress(27, 5000, 'Downloading kernel'); // +27% in 5 seconds
+                await updateProgress(30, 10000, 'Downloading bootstrap'); // +30% in 10 seconds
+                await updateProgress(15, 3000, 'Finishing exploit'); // +15% in 3 seconds
                 await new Promise(resolve => setTimeout(resolve, 15000)); // Wait 15 seconds
-                await updateProgress(100 - progress, 1000); // Fill remaining to 100%
+                statusMessage.textContent = 'Jailbroken';
+                await updateProgress(100 - progress, 1000, ''); // Fill remaining to 100%
             }
 
             runProgress();
