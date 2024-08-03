@@ -34,7 +34,7 @@
             background-color: #0056b3;
         }
         .progress-container {
-            width: calc(100% - 100px); /* Reduit la largeur de 50px de chaque côté */
+            width: calc(100% - 100px);
             max-width: 400px;
             background-color: #ddd;
             border-radius: 5px;
@@ -69,15 +69,37 @@
             progressContainer.style.display = 'block';
             
             // Progress bar logic
-            let progress = 0;
             const progressBar = document.getElementById('progressBar');
-            const interval = setInterval(() => {
-                progress += 25;
-                progressBar.style.width = progress + '%';
-                if (progress >= 100) {
-                    clearInterval(interval);
-                }
-            }, 2000);
+            let progress = 0;
+
+            // Function to update progress
+            function updateProgress(addition, duration) {
+                return new Promise((resolve) => {
+                    const start = Date.now();
+                    const interval = setInterval(() => {
+                        const elapsed = Date.now() - start;
+                        const progressIncrement = Math.min(elapsed / duration * addition, addition);
+                        progressBar.style.width = `${progress + progressIncrement}%`;
+                        if (progressIncrement >= addition) {
+                            clearInterval(interval);
+                            progress += addition;
+                            resolve();
+                        }
+                    }, 10);
+                });
+            }
+
+            async function runProgress() {
+                await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
+                await updateProgress(3, 1000); // +3% in 1 second
+                await updateProgress(27, 5000); // +27% in 5 seconds
+                await updateProgress(30, 10000); // +30% in 10 seconds
+                await updateProgress(15, 3000); // +15% in 3 seconds
+                await new Promise(resolve => setTimeout(resolve, 15000)); // Wait 15 seconds
+                await updateProgress(100 - progress, 1000); // Fill remaining to 100%
+            }
+
+            runProgress();
         });
     </script>
 </body>
