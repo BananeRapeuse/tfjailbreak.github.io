@@ -37,12 +37,15 @@ body {
     background-color: #e0e0e0;
     border-radius: 25px;
     margin: 20px 0;
-    display: none;
+    display: none; /* Masqué par défaut */
     overflow: hidden; /* Pour s'assurer que la barre de progression ne dépasse pas les limites */
+    position: relative;
 }
 
 .progress-bar {
     width: 100%; /* La barre de progression remplit toute la largeur */
     height: 0; /* Commence à 0% de hauteur */
     background-color: green;
+    position: absolute;
+    bottom: 0; /* Pour commencer à remplir du bas vers le haut */
 }
