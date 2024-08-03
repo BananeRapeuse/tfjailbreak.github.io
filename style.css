@@ -12,8 +12,9 @@ body {
 }
 
 .logo {
-    width: 200px;
-    height: auto;
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
 }
 
 .jailbreak-button {
