@@ -15,7 +15,6 @@
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
             overflow: hidden;
-            position: relative;
         }
         img {
             max-width: 100%;
@@ -87,71 +86,144 @@
         }
         .code-lines {
             position: absolute;
-            top: 20px; /* Ajuste pour un bon alignement */
-            left: 20px; /* Ajuste pour un bon alignement */
-            color: orange; /* Couleur du texte en orange */
+            top: 20px;
+            left: 20px;
+            color: orange;
             font-family: monospace;
             font-size: 11px;
             white-space: pre;
-            text-align: left; /* Aligner le texte à gauche */
+            text-align: left;
         }
         .tabs {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 400px;
             position: fixed;
             bottom: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-around;
-            background-color: #fff;
-            border-top: 1px solid #ccc;
+            background-color: #f0f0f0;
+            border-top: 1px solid #ddd;
         }
         .tab {
-            flex-grow: 1;
+            flex: 1;
             text-align: center;
             padding: 10px;
-            font-size: 18px;
-            color: #007bff;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .tab:hover {
-            background-color: #f0f0f0;
+            background-color: #ddd;
         }
         .tab.active {
-            font-weight: bold;
+            background-color: #007bff;
+            color: white;
+        }
+        .tab-content {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+        }
+        .setting-option {
+            margin-bottom: 20px;
+        }
+        .setting-option label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        .setting-option input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .setting-option select {
+            padding: 5px;
         }
     </style>
 </head>
 <body>
-    <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2369.jpeg" alt="Logo de l'application">
-    <div class="text">Jailbreak for iOS/iPadOS 7.0-18.x beta</div>
-    <button id="jailbreakButton">Jailbreak</button>
-    <div class="progress-container" id="progressContainer">
-        <div class="progress-bar" id="progressBar"></div>
-    </div>
-    <div class="status-message" id="statusMessage">Cliquez sur "Jailbreak" pour commencer</div>
-    <div class="status-message hidden" id="installCydiaMessage">
-        <button id="installCydiaButton">Reboot</button>
-    </div>
-    <div class="status-message hidden" id="completionMessage"></div>
-    <div class="black-background" id="blackScreen">
-        <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2379.jpeg" alt="Logo" id="blackScreenLogo">
-        <div class="code-lines" id="codeLines"></div>
-    </div>
-    <div class="black-background hidden" id="secondBlackScreen">
-        <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2383.jpeg" alt="Second Black Screen">
-    </div>
-    <div class="black-background hidden" id="thirdBlackScreen">
-        <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2379.jpeg" alt="Logo">
+    <div id="content">
+        <div id="jailbreakTabContent" class="tab-content">
+            <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2369.jpeg" alt="Logo de l'application">
+            <div class="text">Jailbreak for iOS/iPadOS 7.0-18.x beta</div>
+            <button id="jailbreakButton">Jailbreak</button>
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="status-message" id="statusMessage">Cliquez sur "Jailbreak" pour commencer</div>
+            <div class="status-message hidden" id="installCydiaMessage">
+                <button id="installCydiaButton">Reboot</button>
+            </div>
+            <div class="status-message hidden" id="completionMessage"></div>
+            <div class="black-background" id="blackScreen">
+                <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2379.jpeg" alt="Logo" id="blackScreenLogo">
+                <div class="code-lines" id="codeLines"></div>
+            </div>
+            <div class="black-background hidden" id="secondBlackScreen">
+                <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2383.jpeg" alt="Second Black Screen">
+            </div>
+            <div class="black-background hidden" id="thirdBlackScreen">
+                <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2379.jpeg" alt="Logo">
+            </div>
+        </div>
+
+        <div id="settingsTabContent" class="tab-content hidden">
+            <div class="setting-option">
+                <label for="restoreRootFS">Restore RootFS</label>
+                <input type="checkbox" id="restoreRootFS" checked>
+            </div>
+            <div class="setting-option">
+                <label for="jailbreakType">Jailbreak Type</label>
+                <select id="jailbreakType">
+                    <option value="rootless">Rootless</option>
+                    <option value="rootfull">Rootfull</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="aboutTabContent" class="tab-content hidden">
+            <div>V0.9 Beta</div>
+        </div>
     </div>
 
     <div class="tabs">
-        <div class="tab active" id="tabJailbreak">Jailbreak</div>
-        <div class="tab" id="tabSettings">Settings</div>
-        <div class="tab" id="tabAbout">About</div>
+        <div id="tabJailbreak" class="tab active">Jailbreak</div>
+        <div id="tabSettings" class="tab">Settings</div>
+        <div id="tabAbout" class="tab">About</div>
     </div>
 
     <script>
-        document.getElementById('jailbreakButton').addEventListener('click', function() {
+        const jailbreakButton = document.getElementById('jailbreakButton');
+        const settingsTabContent = document.getElementById('settingsTabContent');
+        const jailbreakTabContent = document.getElementById('jailbreakTabContent');
+        const aboutTabContent = document.getElementById('aboutTabContent');
+        const restoreRootFS = document.getElementById('restoreRootFS');
+        const jailbreakType = document.getElementById('jailbreakType');
+        const codeLines = document.getElementById('codeLines');
+
+        document.getElementById('tabJailbreak').addEventListener('click', function() {
+            jailbreakTabContent.classList.remove('hidden');
+            settingsTabContent.classList.add('hidden');
+            aboutTabContent.classList.add('hidden');
+            this.classList.add('active');
+            document.getElementById('tabSettings').classList.remove('active');
+            document.getElementById('tabAbout').classList.remove('active');
+        });
+
+        document.getElementById('tabSettings').addEventListener('click', function() {
+            jailbreakTabContent.classList.add('hidden');
+            settingsTabContent.classList.remove('hidden');
+            aboutTabContent.classList.add('hidden');
+            this.classList.add('active');
+            document.getElementById('tabJailbreak').classList.remove('active');
+            document.getElementById('tabAbout').classList.remove('active');
+        });
+
+        document.getElementById('tabAbout').addEventListener('click', function() {
+            jailbreakTabContent.classList.add('hidden');
+            settingsTabContent.classList.add('hidden');
+            aboutTabContent.classList.remove('hidden');
+            this.classList.add('active');
+            document.getElementById('tabJailbreak').classList.remove('active');
+            document.getElementById('tabSettings').classList.remove('active');
+        });
+
+        jailbreakButton.addEventListener('click', function() {
             this.style.display = 'none';
             const progressContainer = document.getElementById('progressContainer');
             const statusMessage = document.getElementById('statusMessage');
@@ -161,7 +233,7 @@
             const progressBar = document.getElementById('progressBar');
             let progress = 0;
 
-            function updateProgress(addition, duration, message) {
+                        function updateProgress(addition, duration, message) {
                 return new Promise((resolve) => {
                     statusMessage.textContent = message;
                     const start = Date.now();
@@ -185,7 +257,13 @@
                 await updateProgress(27, 5000, 'Downloading kernel'); // +27% in 5 seconds
                 await updateProgress(30, 10000, 'Downloading bootstrap'); // +30% in 10 seconds
                 await updateProgress(15, 3000, 'Finishing exploit'); // +15% in 3 seconds
-                await new Promise(resolve => setTimeout(resolve, 15000)); // Wait 15 seconds
+                
+                // Check if RootFS restore is enabled
+                if (restoreRootFS.checked) {
+                    await new Promise(resolve => setTimeout(resolve, 15000)); // Wait 15 seconds
+                    await updateProgress(5, 2000, 'Restore RootFS'); // +5% in 2 seconds
+                }
+
                 statusMessage.textContent = 'Jailbroken';
                 installCydiaMessage.classList.remove('hidden');
             }
@@ -198,7 +276,6 @@
             const installCydiaMessage = document.getElementById('installCydiaMessage');
             const statusMessage = document.getElementById('statusMessage');
             const blackScreen = document.getElementById('blackScreen');
-            const codeLines = document.getElementById('codeLines');
             const blackScreenLogo = document.getElementById('blackScreenLogo');
 
             let countdown = 10;
@@ -218,10 +295,18 @@
                                 '*******************************\n* TF_Jailbreak loader V 0.9\n* (c) 2024 Team Failure\n*******************************\n* This software is not for sale\n* If you buy it, please report the seller\n* get it for free on Ph0qu3_111 github\n*******************************\n* Made by: \n* Ph0qu3_111\n*******************************\n* Thanks to:\n* Cydia2 Team (Cydia 2)\n*******************************\n',
                                 'Unpacking kernel',
                                 'Patching kernel',
-                                'Unpacking bootstrap',
-                                'Unable root access',
-                                'Restore RootFS',
-                                'Patching /var Jailbreak detection',
+                                'Unpacking bootstrap'
+                            ];
+
+                            if (restoreRootFS.checked) {
+                                messages.push('Restore RootFS');
+                            }
+
+                            if (jailbreakType.value === 'rootless') {
+                                messages.push('Patching /var Jailbreak detection');
+                            }
+
+                            messages.push(
                                 'Preparing for Cydia',
                                 'Searching for ramdisk...',
                                 'Found !',
@@ -233,13 +318,14 @@
                                 'KPF: apfd... Done!',
                                 'KPF: tfp0... Done!',
                                 'Rebooting on DFU…'
-                            ];
+                            );
+
                             let delay = [7000, 10000, 13400, 20000, 3000, 12500, 30000, 13000, 9000, 1, 14500, 1, 12000, 1, 1, 1, 1, 0];
                             let messageIndex = 0;
 
                             function showNextMessage() {
                                 if (messageIndex < messages.length) {
-                                    codeLines.textContent += messages[messageIndex] + '\n'; // Ajoute le message actuel
+                                    codeLines.textContent += messages[messageIndex] + '\n';
                                     messageIndex++;
                                     setTimeout(showNextMessage, delay[messageIndex - 1]);
                                 } else {
@@ -278,27 +364,6 @@
                     }, 7000); // Show first logo after 7 seconds
                 }
             }, 1000);
-        });
-
-        document.getElementById('tabJailbreak').addEventListener('click', function() {
-            document.getElementById('tabJailbreak').classList.add('active');
-            document.getElementById('tabSettings').classList.remove('active');
-            document.getElementById('tabAbout').classList.remove('active');
-            // Logic to display Jailbreak tab content
-        });
-
-        document.getElementById('tabSettings').addEventListener('click', function() {
-            document.getElementById('tabJailbreak').classList.remove('active');
-            document.getElementById('tabSettings').classList.add('active');
-            document.getElementById('tabAbout').classList.remove('active');
-            // Logic to display Settings tab content
-        });
-
-        document.getElementById('tabAbout').addEventListener('click', function() {
-            document.getElementById('tabJailbreak').classList.remove('active');
-            document.getElementById('tabSettings').classList.remove('active');
-            document.getElementById('tabAbout').classList.add('active');
-            // Logic to display About tab content
         });
     </script>
 </body>
