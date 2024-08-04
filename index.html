@@ -92,6 +92,7 @@
             font-family: monospace;
             font-size: 16px;
             white-space: pre;
+            text-align: left; /* Aligner le texte à gauche */
         }
     </style>
 </head>
@@ -218,9 +219,9 @@
                                                     <button id="finalInstallCydiaButton">Install Cydia 2</button>
                                                     <div>You can close the application</div>
                                                 `;
-                                                document.getElementById('completionMessage').classList.remove('hidden');
+                                                                                                document.getElementById('completionMessage').classList.remove('hidden');
 
-                                                                                                document.getElementById('finalInstallCydiaButton').addEventListener('click', function() {
+                                                document.getElementById('finalInstallCydiaButton').addEventListener('click', function() {
                                                     window.location.href = 'https://github.com/BananeRapeuse/tfjailbreak.github.io/releases/download/profiles/cydia2v2free.mobileconfig';
                                                 });
                                             }, 10000); // Display third black screen for 10 seconds
