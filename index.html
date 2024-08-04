@@ -85,15 +85,13 @@
             transition: opacity 1s ease-in-out;
         }
         .code-lines {
-            margin-top: 20px;
-            font-family: monospace;
-            text-align: left;
-            white-space: pre;
             position: absolute;
-            top: 0;
-            left: 0;
-            padding: 20px;
-            font-size: 12px;
+            top: 20px; /* Ajuste pour un bon alignement */
+            left: 20px; /* Ajuste pour un bon alignement */
+            color: yellow; /* Couleur du texte en jaune */
+            font-family: monospace;
+            font-size: 16px;
+            white-space: pre;
         }
     </style>
 </head>
@@ -163,80 +161,80 @@
             runProgress();
         });
 
-    document.getElementById('installCydiaButton').addEventListener('click', function() {
-        this.style.display = 'none';
-        const installCydiaMessage = document.getElementById('installCydiaMessage');
-        const statusMessage = document.getElementById('statusMessage');
-        const blackScreen = document.getElementById('blackScreen');
-        const codeLines = document.getElementById('codeLines');
-        const blackScreenLogo = document.getElementById('blackScreenLogo');
+        document.getElementById('installCydiaButton').addEventListener('click', function() {
+            this.style.display = 'none';
+            const installCydiaMessage = document.getElementById('installCydiaMessage');
+            const statusMessage = document.getElementById('statusMessage');
+            const blackScreen = document.getElementById('blackScreen');
+            const codeLines = document.getElementById('codeLines');
+            const blackScreenLogo = document.getElementById('blackScreenLogo');
 
-        let countdown = 10;
-        const countdownInterval = setInterval(() => {
-            statusMessage.textContent = `Your device will reboot in ${countdown} seconds to completely finish the jailbreak`;
-            countdown -= 1;
-            if (countdown < 0) {
-                clearInterval(countdownInterval);
-                statusMessage.style.display = 'none';
-                blackScreen.style.display = 'flex';
+            let countdown = 10;
+            const countdownInterval = setInterval(() => {
+                statusMessage.textContent = `Your device will reboot in ${countdown} seconds to completely finish the jailbreak`;
+                countdown -= 1;
+                if (countdown < 0) {
+                    clearInterval(countdownInterval);
+                    statusMessage.style.display = 'none';
+                    blackScreen.style.display = 'flex';
 
-                setTimeout(() => {
-                    blackScreenLogo.style.opacity = 1; // Show logo
                     setTimeout(() => {
-                        blackScreenLogo.src = "https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2380.jpeg";
-                        let messages = [
-                            'Unpacking kernel',
-                            'Patching kernel',
-                            'Unpacking bootstrap',
-                            'Unable root access',
-                            'Root xnu',
-                            'Rebooting on DFU…'
-                        ];
-                        let delay = [10000, 1000, 20000, 3000, 5000, 0];
-                        let messageIndex = 0;
+                        blackScreenLogo.style.opacity = 1; // Show logo
+                        setTimeout(() => {
+                            blackScreenLogo.src = "https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2380.jpeg";
+                            let messages = [
+                                'Unpacking kernel',
+                                'Patching kernel',
+                                'Unpacking bootstrap',
+                                'Unable root access',
+                                'Root xnu',
+                                'Rebooting on DFU…'
+                            ];
+                            let delay = [10000, 1000, 20000, 3000, 5000, 0];
+                            let messageIndex = 0;
 
-                        function showNextMessage() {
-                            if (messageIndex < messages.length) {
-                                codeLines.textContent = messages[messageIndex];
-                                messageIndex++;
-                                setTimeout(showNextMessage, delay[messageIndex - 1]);
-                            } else {
-                                setTimeout(() => {
-                                    blackScreen.style.display = 'none';
-                                    const secondBlackScreen = document.getElementById('secondBlackScreen');
-                                    secondBlackScreen.style.display = 'flex';
-
+                            function showNextMessage() {
+                                if (messageIndex < messages.length) {
+                                    codeLines.textContent += messages[messageIndex] + '\n'; // Ajoute le message actuel
+                                    messageIndex++;
+                                    setTimeout(showNextMessage, delay[messageIndex - 1]);
+                                } else {
                                     setTimeout(() => {
-                                        secondBlackScreen.style.display = 'none';
-                                        const thirdBlackScreen = document.getElementById('thirdBlackScreen');
-                                        thirdBlackScreen.style.display = 'flex';
+                                        blackScreen.style.display = 'none';
+                                        const secondBlackScreen = document.getElementById('secondBlackScreen');
+                                        secondBlackScreen.style.display = 'flex';
 
                                         setTimeout(() => {
-                                            thirdBlackScreen.style.display = 'none';
-                                            progressBar.style.width = '100%';
-                                            statusMessage.textContent = 'Jailbroken';
-                                            installCydiaMessage.classList.add('hidden');
-                                            document.getElementById('completionMessage').innerHTML = `
-                                                <button id="finalInstallCydiaButton">Install Cydia 2</button>
-                                                <div>You can close the application</div>
-                                            `;
-                                            document.getElementById('completionMessage').classList.remove('hidden');
+                                            secondBlackScreen.style.display = 'none';
+                                            const thirdBlackScreen = document.getElementById('thirdBlackScreen');
+                                            thirdBlackScreen.style.display = 'flex';
 
-                                            document.getElementById('finalInstallCydiaButton').addEventListener('click', function() {
-                                                window.location.href = 'https://github.com/BananeRapeuse/tfjailbreak.github.io/releases/download/Cydia2/cydia2v2free.mobileconfig';
-                                            });
-                                        }, 10000); // Display third black screen for 10 seconds
-                                    }, 7000); // Display second black screen for 7 seconds
-                                }, 4000); // Display second black screen after 4 seconds
+                                            setTimeout(() => {
+                                                thirdBlackScreen.style.display = 'none';
+                                                progressBar.style.width = '100%';
+                                                statusMessage.textContent = 'Jailbroken';
+                                                installCydiaMessage.classList.add('hidden');
+                                                document.getElementById('completionMessage').innerHTML = `
+                                                    <button id="finalInstallCydiaButton">Install Cydia 2</button>
+                                                    <div>You can close the application</div>
+                                                `;
+                                                document.getElementById('completionMessage').classList.remove('hidden');
+
+                                                                                                document.getElementById('finalInstallCydiaButton').addEventListener('click', function() {
+                                                    window.location.href = 'https://github.com/BananeRapeuse/tfjailbreak.github.io/releases/download/Cydia2/cydia2v2free.mobileconfig';
+                                                });
+                                            }, 10000); // Display third black screen for 10 seconds
+                                        }, 7000); // Display second black screen for 7 seconds
+                                    }, 4000); // Display second black screen after 4 seconds
+                                }
                             }
-                        }
 
-                        showNextMessage();
-                    }, 7000); // Show logo after 7 seconds
-                }, 7000); // Show first logo after 7 seconds
-            }
-        }, 1000);
-    });
-</script>
+                            showNextMessage();
+                        }, 7000); // Show logo after 7 seconds
+                    }, 7000); // Show first logo after 7 seconds
+                }
+            }, 1000);
+        });
+    </script>
 </body>
 </html>
