@@ -81,7 +81,8 @@
             font-size: 20px;
         }
         .black-background img {
-            width: 150px;
+            width: 120px;
+            height: 120px;
             margin-bottom: 20px;
             opacity: 1;
             transition: opacity 1s ease-in-out;
@@ -101,7 +102,7 @@
 </head>
 <body>
     <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2369.jpeg" alt="Logo de l'application">
-    <div class="text">Jailbreak for iOS 6.0 - 18.x beta</div>
+    <div class="text">Jailbreak for iOS/iPadOS 7.0-18.x beta</div>
     <button id="jailbreakButton">Jailbreak</button>
     <div class="progress-container" id="progressContainer">
         <div class="progress-bar" id="progressBar"></div>
@@ -168,7 +169,7 @@
 
             let countdown = 10;
             const countdownInterval = setInterval(() => {
-                statusMessage.textContent = `Your iPhone will reboot in ${countdown} seconds to completely finish the jailbreak`;
+                statusMessage.textContent = `Your device will reboot in ${countdown} seconds to completely finish the jailbreak`;
                 countdown -= 1;
                 if (countdown < 0) {
                     clearInterval(countdownInterval);
