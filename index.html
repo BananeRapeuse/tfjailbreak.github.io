@@ -184,15 +184,16 @@
                         setTimeout(() => {
                             blackScreenLogo.src = "https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2380.jpeg";
                             let messages = [
-                                '*******************************\n* TF_Jailbreak loader V 0.9\n* (c) 2024 Team Failure\n*******************************\n* Made by: \n* Ph0qu3_111\n*******************************\n* Thanks to:\n* Cydia2 Team (Cydia 2)\n*******************************\n',
+                                '*******************************\n* TF_Jailbreak loader V 0.9\n* (c) 2024 Team Failure | BSL-1.0 License\n*******************************\n* Made by: \n* Ph0qu3_111\n*******************************\n* Thanks to:\n* Cydia2 Team (Cydia 2)\n*******************************\n',
                                 'Unpacking kernel',
                                 'Patching kernel',
-                                'Unpacking bootstrap',
+                                'Unzip bootstrap',
                                 'Unable root access',
-                                'Root xnu',
+                                'Restore RootFS',
+                                'Patching /var Jailbreak detection',
                                 'Rebooting on DFU…'
                             ];
-                            let delay = [7000, 10000, 1000, 20000, 3000, 5000, 0];
+                            let delay = [7000, 10000, 1000, 20000, 3000, 5000, 5000, 0];
                             let messageIndex = 0;
 
                             function showNextMessage() {
