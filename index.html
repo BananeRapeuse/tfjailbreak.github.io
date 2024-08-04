@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jailbreak App</title>
+    <title>TF_Jailbreak</title>
     <style>
         body {
             display: flex;
@@ -106,7 +106,7 @@
     </div>
     <div class="status-message" id="statusMessage">Cliquez sur "Jailbreak" pour commencer</div>
     <div class="status-message hidden" id="installCydiaMessage">
-        <button id="installCydiaButton">Install Cydia 2</button>
+        <button id="installCydiaButton">Reboot</button>
     </div>
     <div class="status-message hidden" id="completionMessage"></div>
     <div class="black-background" id="blackScreen">
@@ -218,7 +218,7 @@
                                             installCydiaMessage.classList.add('hidden');
                                             document.getElementById('completionMessage').innerHTML = `
                                                 <button id="finalInstallCydiaButton">Install Cydia 2</button>
-                                                <div>You can close the application</div>
+                                                <div>You can now install Cydia 2 and close the application</div>
                                             `;
                                             document.getElementById('completionMessage').classList.remove('hidden');
 
