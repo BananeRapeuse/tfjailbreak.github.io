@@ -113,6 +113,12 @@
         <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2379.jpeg" alt="Logo" id="blackScreenLogo">
         <div class="code-lines" id="codeLines"></div>
     </div>
+    <div class="black-background hidden" id="secondBlackScreen">
+        <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2382.jpeg" alt="Second Black Screen">
+    </div>
+    <div class="black-background hidden" id="thirdBlackScreen">
+        <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2379.jpeg" alt="Logo">
+    </div>
 
     <script>
         document.getElementById('jailbreakButton').addEventListener('click', function() {
@@ -175,15 +181,44 @@
                     blackScreen.style.display = 'flex';
 
                     setTimeout(() => {
-                        blackScreenLogo.src = 'https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2380.jpeg';
-                        let lineCount = 0;
-                        const codeInterval = setInterval(() => {
-                            codeLines.textContent += 'test\n';
-                            lineCount++;
-                            if (lineCount >= 10) { // Stop after 10 lines for demonstration
-                                clearInterval(codeInterval);
+                        let messages = [
+                            'Unpacking kernel',
+                            'Patching kernel',
+                            'Unpacking bootstrap',
+                            'Unable root access',
+                            'Root xnu',
+                            'Rebooting on DFU…'
+                        ];
+                        let delay = [10000, 1000, 20000, 3000, 5000, 0];
+                        let messageIndex = 0;
+                        let messageElement = document.createElement('div');
+                        messageElement.style.fontSize = '20px';
+                        messageElement.style.marginTop = '20px';
+                        document.getElementById('codeLines').appendChild(messageElement);
+
+                        function showNextMessage() {
+                            if (messageIndex < messages.length) {
+                                messageElement.textContent = messages[messageIndex];
+                                messageIndex++;
+                                setTimeout(showNextMessage, delay[messageIndex - 1]);
+                            } else {
+                                setTimeout(() => {
+                                    blackScreen.style.display = 'none';
+                                    document.getElementById('secondBlackScreen').style.display = 'flex';
+
+                                    setTimeout(() => {
+                                        document.getElementById('secondBlackScreen').style.display = 'none';
+                                        document.getElementById('thirdBlackScreen').style.display = 'flex';
+
+                                        setTimeout(() => {
+                                            document.getElementById('thirdBlackScreen').style.display = 'none';
+                                        }, 10000); // Display third black screen for 10 seconds
+                                    }, 10000); // Display second black screen for 10 seconds
+                                }, 0); // Wait for the messages to finish
                             }
-                        }, 2000);
+                        }
+
+                        showNextMessage();
                     }, 7000); // Show logo after 7 seconds
                 }
             }, 1000);
