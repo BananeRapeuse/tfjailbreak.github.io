@@ -19,6 +19,7 @@
         img {
             max-width: 100%;
             height: auto;
+            cursor: pointer;
         }
         button {
             padding: 10px 20px;
@@ -97,7 +98,7 @@
     </style>
 </head>
 <body>
-    <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2369.jpeg" alt="Logo de l'application">
+    <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2369.jpeg" alt="Logo de l'application" id="logoImage">
     <div class="text">Jailbreak for iOS/iPadOS 12.0-18.x beta</div>
     <button id="jailbreakButton">Jailbreak</button>
     <div class="progress-container" id="progressContainer">
@@ -120,6 +121,38 @@
     </div>
 
     <script>
+        function getIOSVersion() {
+            var agent = window.navigator.userAgent;
+            var start = agent.indexOf('OS ');
+            if ((agent.indexOf('iPhone') > -1) || (agent.indexOf('iPad') > -1) || (agent.indexOf('iPod') > -1)) {
+                if (start > -1) {
+                    return window.Number(agent.substr(start + 3, 3).replace('_', '.'));
+                }
+            }
+            return null;
+        }
+
+        function getDeviceModel() {
+            var models = {
+                'iPhone': /iPhone/,
+                'iPad': /iPad/,
+                'iPod': /iPod/
+            };
+
+            for (var model in models) {
+                if (models[model].test(navigator.userAgent)) {
+                    return model;
+                }
+            }
+            return 'Unknown Device';
+        }
+
+        document.getElementById('logoImage').addEventListener('click', function() {
+            var version = getIOSVersion();
+            var model = getDeviceModel();
+            alert('Device: ' + model + '\nVersion: ' + version);
+        });
+
         document.getElementById('jailbreakButton').addEventListener('click', function() {
             this.style.display = 'none';
             const progressContainer = document.getElementById('progressContainer');
@@ -191,9 +224,9 @@
                                 'Unable root access',
                                 'Patching /var Jailbreak detection',
                                 'Preparing for Cydia',
-                                'Surching for ramdisk...',
+                                'Searching for ramdisk...',
                                 'Found !',
-                                'Unable MMU...',
+                                'Enabling MMU...',
                                 'Done !',
                                 'Adding mapping...',
                                 'Done !',
@@ -208,9 +241,9 @@
 
                             function showNextMessage() {
                                 if (messageIndex < messages.length) {
-                                    codeLines.textContent += messages[messageIndex] + '\n'; // Ajoute le message actuel
+                                    codeLines.textContent += messages[messageIndex] + '\n';
                                     messageIndex++;
-                                                                        setTimeout(showNextMessage, delay[messageIndex - 1]);
+                                    setTimeout(showNextMessage, delay[messageIndex - 1]);
                                 } else {
                                     setTimeout(() => {
                                         blackScreen.style.display = 'none';
