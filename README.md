@@ -25,3 +25,6 @@ App version: 1.1
 -	iOS 17.0 - 17.6 : sealra1n-exploit
   
 -	iOS 18.0 (beta) : melonra1n-exploit
+
+
+Note: for devices with chip A5-A11, we use checkm8 exploit.
