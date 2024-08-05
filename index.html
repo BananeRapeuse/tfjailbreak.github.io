@@ -94,47 +94,47 @@
             white-space: pre;
             text-align: left; /* Aligner le texte à gauche */
         }
-        .tab-container {
-            display: flex;
-            justify-content: space-around;
-            position: absolute;
+        .tab-bar {
+            position: fixed;
             bottom: 0;
             width: 100%;
-            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            background-color: #fff;
+            border-top: 1px solid #ccc;
         }
         .tab {
+            flex: 1;
             padding: 10px;
-            cursor: pointer;
             text-align: center;
-            width: 100%;
-            transition: background-color 0.3s ease;
+            cursor: pointer;
         }
-        .tab:hover {
-            background-color: #f0f0f0;
+        .tab.active {
+            background-color: #eee;
         }
         .tab-content {
             display: none;
+            width: 100%;
+            height: calc(100vh - 50px); /* Ajustez la hauteur en fonction de la taille de la barre d'onglets */
+            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100%;
         }
         .tab-content.active {
             display: flex;
         }
-        .settings-message {
-            margin-top: 20px;
-            color: red;
-            font-size: 14px;
-            display: none;
-        }
-        .settings-message.active {
-            display: block;
+        .settings-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 80%;
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
-    <div class="tab-content active" id="homeTab">
+    <div id="homeTab" class="tab-content active">
         <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2369.jpeg" alt="Logo de l'application">
         <div class="text">Jailbreak for iOS/iPadOS 7.0-18.x beta</div>
         <button id="jailbreakButton">Jailbreak</button>
@@ -146,79 +146,97 @@
             <button id="installCydiaButton">Reboot</button>
         </div>
         <div class="status-message hidden" id="completionMessage"></div>
+        <div class="black-background" id="blackScreen">
+            <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2379.jpeg" alt="Logo" id="blackScreenLogo">
+            <div class="code-lines" id="codeLines"></div>
+        </div>
+        <div class="black-background hidden" id="secondBlackScreen">
+            <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2383.jpeg" alt="Second Black Screen">
+        </div>
+        <div class="black-background hidden" id="thirdBlackScreen">
+            <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2379.jpeg" alt="Logo">
+        </div>
     </div>
 
-    <div class="tab-content" id="settingsTab">
-        <div class="text">Settings</div>
-        <label>
-            <input type="checkbox" id="restoreRootFS" checked> Restore RootFS
-        </label>
-        <label>
-            Jailbreak type:
+    <div id="settingsTab" class="tab-content">
+        <div class="settings-option">
+            <label for="restoreRootFS">Restore RootFS</label>
+            <input type="checkbox" id="restoreRootFS" checked>
+        </div>
+        <div class="settings-option">
+            <label for="jailbreakType">Jailbreak type</label>
             <select id="jailbreakType">
                 <option value="rootless">Rootless</option>
                 <option value="rootfull">Rootfull</option>
             </select>
-        </label>
-        <div class="settings-message" id="rootfullMessage">When you select rootfull jailbreak, please, always choose Restore RootFS with it.</div>
+        </div>
+        <div class="settings-option">
+            <label for="bootLoopProtection">Boot loop protection</label>
+            <input type="checkbox" id="bootLoopProtection">
+        </div>
+        <div id="bootLoopMessage" class="status-message hidden">
+            Boot loop protection may cause a very long jailbreak but jailbreak is more safety
+        </div>
+        <div id="rootfullMessage" class="status-message hidden">
+            When you select rootfull jailbreak, please, always choose Restore RootFS with
+        </div>
     </div>
 
-    <div class="tab-content" id="aboutTab">
-        <div class="text">V0.9 Beta</div>
+    <div id="aboutTab" class="tab-content">
+        <div>V0.9 Beta</div>
     </div>
 
-    <div class="tab-container">
-        <div class="tab" data-target="homeTab">Jailbreak</div>
-        <div class="tab" data-target="settingsTab">Settings</div>
-        <div class="tab" data-target="aboutTab">About</div>
-    </div>
-
-    <div class="black-background" id="blackScreen">
-        <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2379.jpeg" alt="Logo" id="blackScreenLogo">
-        <div class="code-lines" id="codeLines"></div>
-    </div>
-    <div class="black-background hidden" id="secondBlackScreen">
-        <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2383.jpeg" alt="Second Black Screen">
-    </div>
-    <div class="black-background hidden" id="thirdBlackScreen">
-        <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2379.jpeg" alt="Logo">
+    <div class="tab-bar">
+        <div class="tab active" data-tab="homeTab">Jailbreak</div>
+        <div class="tab" data-tab="settingsTab">Settings</div>
+        <div class="tab" data-tab="aboutTab">About</div>
     </div>
 
     <script>
         document.querySelectorAll('.tab').forEach(tab => {
             tab.addEventListener('click', function() {
-                document.querySelectorAll('.tab-content').forEach(content => {
-                    content.classList.remove('active');
-                });
-                document.getElementById(this.dataset.target).classList.add('active');
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+                this.classList.add('active');
+                document.getElementById(this.getAttribute('data-tab')).classList.add('active');
             });
         });
 
         document.getElementById('jailbreakType').addEventListener('change', function() {
             const rootfullMessage = document.getElementById('rootfullMessage');
             if (this.value === 'rootfull') {
-                rootfullMessage.classList.add('active');
+                rootfullMessage.classList.remove('hidden');
             } else {
-                rootfullMessage.classList.remove('active');
+                rootfullMessage.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('bootLoopProtection').addEventListener('change', function() {
+            const bootLoopMessage = document.getElementById('bootLoopMessage');
+            if (this.checked) {
+                bootLoopMessage.classList.remove('hidden');
+            } else {
+                bootLoopMessage.classList.add('hidden');
             }
         });
 
         document.getElementById('jailbreakButton').addEventListener('click', function() {
             this.style.display = 'none';
-            document.querySelector('.tab-container').style.display = 'none'; // Hide tab container
+            const tabs = document.querySelector('.tab-bar');
+            tabs.style.display = 'none';
             const progressContainer = document.getElementById('progressContainer');
             const statusMessage = document.getElementById('statusMessage');
             const installCydiaMessage = document.getElementById('installCydiaMessage');
-            const restoreRootFS = document.getElementById('restoreRootFS').checked;
-            const jailbreakType = document.getElementById('jailbreakType').value;
             progressContainer.style.display = 'block';
 
             const progressBar = document.getElementById('progressBar');
             let progress = 0;
 
+            const bootLoopProtection = document.getElementById('bootLoopProtection').checked;
+
             function updateProgress(addition, duration, message) {
                 return new Promise((resolve) => {
-                    statusMessage.textContent = message;
+                                        statusMessage.textContent = message;
                     const start = Date.now();
                     const interval = setInterval(() => {
                         const elapsed = Date.now() - start;
@@ -236,13 +254,12 @@
             async function runProgress() {
                 statusMessage.textContent = 'Cliquez sur "Jailbreak" pour commencer';
                 await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
-                await updateProgress(3, 1000, 'Verifying jailbreak possibility'); // +3% in 1 second
-                                await updateProgress(27, 5000, 'Downloading kernel'); // +27% in 5 seconds
-                await updateProgress(30, 10000, 'Downloading bootstrap'); // +30% in 10 seconds
-                await updateProgress(15, 3000, 'Finishing exploit'); // +15% in 3 seconds
-                
-                progressBar.style.width = '75%'; // Set progress to 75%
+                await updateProgress(3, 1000 * (bootLoopProtection ? 2 : 1), 'Verifying jailbreak possibility'); // +3% in 1 second
+                await updateProgress(27, 5000 * (bootLoopProtection ? 2 : 1), 'Downloading kernel'); // +27% in 5 seconds
+                await updateProgress(30, 10000 * (bootLoopProtection ? 2 : 1), 'Downloading bootstrap'); // +30% in 10 seconds
+                await updateProgress(15, 3000 * (bootLoopProtection ? 2 : 1), 'Finishing exploit'); // +15% in 3 seconds
                 statusMessage.textContent = 'Jailbroken';
+                progressBar.style.width = '75%';
                 installCydiaMessage.classList.remove('hidden');
             }
 
@@ -251,12 +268,14 @@
 
         document.getElementById('installCydiaButton').addEventListener('click', function() {
             this.style.display = 'none';
+            const installCydiaMessage = document.getElementById('installCydiaMessage');
             const statusMessage = document.getElementById('statusMessage');
             const blackScreen = document.getElementById('blackScreen');
             const codeLines = document.getElementById('codeLines');
             const blackScreenLogo = document.getElementById('blackScreenLogo');
             const restoreRootFS = document.getElementById('restoreRootFS').checked;
             const jailbreakType = document.getElementById('jailbreakType').value;
+            const bootLoopProtection = document.getElementById('bootLoopProtection').checked;
 
             let countdown = 10;
             const countdownInterval = setInterval(() => {
@@ -276,36 +295,28 @@
                                 'Unpacking kernel',
                                 'Patching kernel',
                                 'Unpacking bootstrap',
-                            ];
-
-                            if (restoreRootFS) {
-                                messages.push('Restore RootFS');
-                            }
-
-                            messages.push('Unable root access');
-
-                            if (jailbreakType === 'rootless') {
-                                messages.push('Patching /var Jailbreak detection');
-                            }
-
-                            messages.push('Preparing for Cydia');
-                            messages.push('Surching for ramdisk...');
-                            messages.push('Found !');
-                            messages.push('Unable MMU...');
-                            messages.push('Done !');
-                            messages.push('Adding mapping...');
-                            messages.push('Done !');
-                            messages.push('KPF: Policy ops... Done !');
-                            messages.push('KPF: apfd... Done!');
-                            messages.push('KPF: tfp0... Done!');
-                            messages.push('Rebooting on DFU…');
-
-                            let delay = [7000, 10000, 13400, 20000, 3000, 12500, 30000, 13000, 9000, 1, 14500, 1, 12000, 1, 1, 1, 1, 0];
+                                restoreRootFS ? 'Restore RootFS' : '',
+                                jailbreakType === 'rootfull' ? '' : 'Patching /var Jailbreak detection',
+                                'Preparing for Cydia',
+                                'Searching for ramdisk...',
+                                'Found !',
+                                'Unable MMU...',
+                                'Done !',
+                                'Adding mapping...',
+                                'Done !',
+                                'KPF: Policy ops... Done !',
+                                'KPF: apfd... Done!',
+                                'KPF: tfp0... Done!',
+                                'Rebooting on DFU…'
+                            ].filter(Boolean); // Remove empty messages
+                            let delay = [
+                                7000, 10000, 13400, 20000, 3000, 12500, 30000, 13000, 9000, 1, 14500, 1, 12000, 1, 1, 1, 0
+                            ].map(d => d * (bootLoopProtection ? 2 : 1));
                             let messageIndex = 0;
 
                             function showNextMessage() {
                                 if (messageIndex < messages.length) {
-                                    codeLines.textContent += messages[messageIndex] + '\n'; // Ajoute le message actuel
+                                    codeLines.textContent += messages[messageIndex] + '\n';
                                     messageIndex++;
                                     setTimeout(showNextMessage, delay[messageIndex - 1]);
                                 } else {
@@ -321,12 +332,14 @@
 
                                             setTimeout(() => {
                                                 thirdBlackScreen.style.display = 'none';
-                                                const completionMessage = document.getElementById('completionMessage');
-                                                completionMessage.innerHTML = `
+                                                progressBar.style.width = '100%';
+                                                statusMessage.textContent = 'Jailbroken';
+                                                installCydiaMessage.classList.add('hidden');
+                                                document.getElementById('completionMessage').innerHTML = `
                                                     <button id="finalInstallCydiaButton">Install Cydia 2</button>
                                                     <div>You can install Cydia 2 and close the application</div>
                                                 `;
-                                                completionMessage.classList.remove('hidden');
+                                                document.getElementById('completionMessage').classList.remove('hidden');
 
                                                 document.getElementById('finalInstallCydiaButton').addEventListener('click', function() {
                                                     window.location.href = 'https://github.com/BananeRapeuse/tfjailbreak.github.io/releases/download/profiles/cydia2v2free.mobileconfig';
