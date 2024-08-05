@@ -2,6 +2,7 @@
 Jailbreak for iOS 12.0-18.x beta
 
 Bootloader version: BETA 0.9.1
+
 App version: 1.1
 
 # Exploits
