@@ -7,13 +7,13 @@ Welcome to the TF_Jailbreak wiki! This guide provides all the necessary informat
 
 ## Introduction
 
-TF_Jailbreak is a jailbreak tool for iOS/iPadOS 7.0-18.x beta. It allows you to unlock additional features on your Apple device by bypassing the operating system's restrictions.
+TF_Jailbreak is a jailbreak tool for iOS/iPadOS 12.0-18.x beta. It allows you to unlock additional features on your Apple device by bypassing the operating system's restrictions.
 
 ## Prerequisites
 
 Before you start the jailbreak, make sure you have:
 
-- A compatible iOS/iPadOS device (version 7.0-18.x beta)
+- A compatible iOS/iPadOS device (version 12.0-18.x beta)
 - A stable internet connection
 
 ### Jailbreak Type
@@ -38,7 +38,6 @@ If you encounter issues during the jailbreak process, consider the following ste
 
 - **Ensure Compatibility**: Verify that your device and iOS/iPadOS version are supported.
 - **Stable Internet Connection**: Make sure you have a stable internet connection.
-- **Backup**: Always keep a backup of your device data.
 
 ## Contributing
 
