@@ -86,37 +86,36 @@
         }
         .code-lines {
             position: absolute;
-            top: 20px; /* Ajuste pour un bon alignement */
-            left: 20px; /* Ajuste pour un bon alignement */
-            color: orange; /* Couleur du texte en orange */
+            top: 20px;
+            left: 20px;
+            color: orange;
             font-family: monospace;
             font-size: 11px;
             white-space: pre;
-            text-align: left; /* Aligner le texte à gauche */
+            text-align: left;
         }
-        .tab-bar {
+        .tabs {
+            display: flex;
+            justify-content: space-around;
             position: fixed;
             bottom: 0;
             width: 100%;
-            display: flex;
-            justify-content: space-around;
             background-color: #fff;
             border-top: 1px solid #ccc;
         }
         .tab {
             flex: 1;
-            padding: 10px;
             text-align: center;
+            padding: 10px 0;
             cursor: pointer;
+            font-size: 16px;
         }
         .tab.active {
-            background-color: #eee;
+            background-color: #007bff;
+            color: white;
         }
         .tab-content {
             display: none;
-            width: 100%;
-            height: calc(100vh - 50px); /* Ajustez la hauteur en fonction de la taille de la barre d'onglets */
-            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -124,17 +123,28 @@
         .tab-content.active {
             display: flex;
         }
-        .settings-option {
+        .settings {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .setting {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            width: 80%;
-            margin: 10px 0;
+            margin-top: 10px;
+        }
+        .setting label {
+            margin-left: 10px;
+            font-size: 16px;
+        }
+        .setting select {
+            margin-left: 10px;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
-    <div id="homeTab" class="tab-content active">
+    <div id="jailbreakTab" class="tab-content active">
         <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2369.jpeg" alt="Logo de l'application">
         <div class="text">Jailbreak for iOS/iPadOS 7.0-18.x beta</div>
         <button id="jailbreakButton">Jailbreak</button>
@@ -159,84 +169,65 @@
     </div>
 
     <div id="settingsTab" class="tab-content">
-        <div class="settings-option">
-            <label for="restoreRootFS">Restore RootFS</label>
-            <input type="checkbox" id="restoreRootFS" checked>
-        </div>
-        <div class="settings-option">
-            <label for="jailbreakType">Jailbreak type</label>
-            <select id="jailbreakType">
-                <option value="rootless">Rootless</option>
-                <option value="rootfull">Rootfull</option>
-            </select>
-        </div>
-        <div class="settings-option">
-            <label for="bootLoopProtection">Boot loop protection</label>
-            <input type="checkbox" id="bootLoopProtection">
-        </div>
-        <div id="bootLoopMessage" class="status-message hidden">
-            Boot loop protection may cause a very long jailbreak but jailbreak is more safety
-        </div>
-        <div id="rootfullMessage" class="status-message hidden">
-            When you select rootfull jailbreak, please, always choose Restore RootFS with
+        <div class="settings">
+            <div class="setting">
+                <input type="checkbox" id="restoreRootFS" checked>
+                <label for="restoreRootFS">Restore RootFS</label>
+            </div>
+            <div class="setting">
+                <label for="jailbreakType">Jailbreak type:</label>
+                <select id="jailbreakType">
+                    <option value="rootless">Rootless</option>
+                    <option value="rootfull">Rootfull</option>
+                </select>
+            </div>
+            <div class="setting">
+                <input type="checkbox" id="bootLoopProtection">
+                <label for="bootLoopProtection">Boot loop protection</label>
+            </div>
         </div>
     </div>
 
     <div id="aboutTab" class="tab-content">
-        <div>V0.9 Beta</div>
+        <div class="text">V0.9 Beta</div>
     </div>
 
-    <div class="tab-bar">
-        <div class="tab active" data-tab="homeTab">Jailbreak</div>
+    <div class="tabs">
+        <div class="tab active" data-tab="jailbreakTab">Jailbreak</div>
         <div class="tab" data-tab="settingsTab">Settings</div>
         <div class="tab" data-tab="aboutTab">About</div>
     </div>
 
     <script>
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
-                this.classList.add('active');
-                document.getElementById(this.getAttribute('data-tab')).classList.add('active');
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                tabContents.forEach(tc => tc.classList.remove('active'));
+                document.getElementById(tab.dataset.tab).classList.add('active');
             });
         });
 
-        document.getElementById('jailbreakType').addEventListener('change', function() {
-            const rootfullMessage = document.getElementById('rootfullMessage');
-            if (this.value === 'rootfull') {
-                rootfullMessage.classList.remove('hidden');
-            } else {
-                rootfullMessage.classList.add('hidden');
-            }
-        });
-
-        document.getElementById('bootLoopProtection').addEventListener('change', function() {
-            const bootLoopMessage = document.getElementById('bootLoopMessage');
-            if (this.checked) {
-                bootLoopMessage.classList.remove('hidden');
-            } else {
-                bootLoopMessage.classList.add('hidden');
-            }
-        });
-
         document.getElementById('jailbreakButton').addEventListener('click', function() {
-            this.style.display = 'none';
-            const tabs = document.querySelector('.tab-bar');
-            tabs.style.display = 'none';
+            tabs.forEach(tab => tab.style.display = 'none');
             const progressContainer = document.getElementById('progressContainer');
             const statusMessage = document.getElementById('statusMessage');
             const installCydiaMessage = document.getElementById('installCydiaMessage');
             progressContainer.style.display = 'block';
 
             const progressBar = document.getElementById('progressBar');
-            let progress = 0;
-
+            const restoreRootFS = document.getElementById('restoreRootFS').checked;
+            const jailbreakType = document.getElementById('jailbreakType').value;
             const bootLoopProtection = document.getElementById('bootLoopProtection').checked;
+            let progress = 0;
 
             function updateProgress(addition, duration, message) {
                 return new Promise((resolve) => {
-                                        statusMessage.textContent = message;
+                    statusMessage.textContent = message;
                     const start = Date.now();
                     const interval = setInterval(() => {
                         const elapsed = Date.now() - start;
@@ -254,10 +245,15 @@
             async function runProgress() {
                 statusMessage.textContent = 'Cliquez sur "Jailbreak" pour commencer';
                 await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
-                await updateProgress(3, 1000 * (bootLoopProtection ? 2 : 1), 'Verifying jailbreak possibility'); // +3% in 1 second
-                await updateProgress(27, 5000 * (bootLoopProtection ? 2 : 1), 'Downloading kernel'); // +27% in 5 seconds
+                                await updateProgress(27, 5000 * (bootLoopProtection ? 2 : 1), 'Downloading kernel'); // +27% in 5 seconds
                 await updateProgress(30, 10000 * (bootLoopProtection ? 2 : 1), 'Downloading bootstrap'); // +30% in 10 seconds
                 await updateProgress(15, 3000 * (bootLoopProtection ? 2 : 1), 'Finishing exploit'); // +15% in 3 seconds
+                if (restoreRootFS) {
+                    await updateProgress(5, 1500 * (bootLoopProtection ? 2 : 1), 'Restore RootFS');
+                }
+                if (jailbreakType === 'rootless') {
+                    await updateProgress(5, 1500 * (bootLoopProtection ? 2 : 1), 'Patching /var Jailbreak detection');
+                }
                 statusMessage.textContent = 'Jailbroken';
                 progressBar.style.width = '75%';
                 installCydiaMessage.classList.remove('hidden');
@@ -273,8 +269,6 @@
             const blackScreen = document.getElementById('blackScreen');
             const codeLines = document.getElementById('codeLines');
             const blackScreenLogo = document.getElementById('blackScreenLogo');
-            const restoreRootFS = document.getElementById('restoreRootFS').checked;
-            const jailbreakType = document.getElementById('jailbreakType').value;
             const bootLoopProtection = document.getElementById('bootLoopProtection').checked;
 
             let countdown = 10;
@@ -296,7 +290,7 @@
                                 'Patching kernel',
                                 'Unpacking bootstrap',
                                 restoreRootFS ? 'Restore RootFS' : '',
-                                jailbreakType === 'rootfull' ? '' : 'Patching /var Jailbreak detection',
+                                jailbreakType === 'rootless' ? 'Patching /var Jailbreak detection' : '',
                                 'Preparing for Cydia',
                                 'Searching for ramdisk...',
                                 'Found !',
@@ -308,17 +302,20 @@
                                 'KPF: apfd... Done!',
                                 'KPF: tfp0... Done!',
                                 'Rebooting on DFU…'
-                            ].filter(Boolean); // Remove empty messages
-                            let delay = [
-                                7000, 10000, 13400, 20000, 3000, 12500, 30000, 13000, 9000, 1, 14500, 1, 12000, 1, 1, 1, 0
-                            ].map(d => d * (bootLoopProtection ? 2 : 1));
+                            ].filter(message => message !== ''); // Filtrer les messages vides
+                            let delay = [7000, 10000, 13400, 20000, 3000, 12500, 30000, 13000, 9000, 1, 14500, 1, 12000, 1, 1, 1, 1, 0];
+
+                            if (bootLoopProtection) {
+                                delay = delay.map(d => d * 2);
+                            }
+
                             let messageIndex = 0;
 
                             function showNextMessage() {
                                 if (messageIndex < messages.length) {
-                                    codeLines.textContent += messages[messageIndex] + '\n';
+                                    codeLines.textContent += messages[messageIndex] + '\n'; // Ajoute le message actuel
+                                    setTimeout(showNextMessage, delay[messageIndex]);
                                     messageIndex++;
-                                    setTimeout(showNextMessage, delay[messageIndex - 1]);
                                 } else {
                                     setTimeout(() => {
                                         blackScreen.style.display = 'none';
@@ -355,6 +352,18 @@
                     }, 7000); // Show first logo after 7 seconds
                 }
             }, 1000);
+        });
+
+        document.getElementById('jailbreakType').addEventListener('change', function() {
+            if (this.value === 'rootfull') {
+                alert('When you select rootfull jailbreak, please, always choose Restore RootFS with it.');
+            }
+        });
+
+        document.getElementById('bootLoopProtection').addEventListener('change', function() {
+            if (this.checked) {
+                alert('Boot loop protection may cause a very long jailbreak but jailbreak is more safe.');
+            }
         });
     </script>
 </body>
