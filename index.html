@@ -100,53 +100,48 @@
             width: 100%;
             display: flex;
             justify-content: space-around;
-            background-color: #fff;
-            border-top: 1px solid #ddd;
+            background-color: #007bff;
             padding: 10px 0;
         }
-        .tab {
-            cursor: pointer;
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #007bff;
+        .tabs button {
+            background-color: #007bff;
+            color: white;
             border: none;
-            background: none;
-            transition: background-color 0.3s ease;
+            cursor: pointer;
+            font-size: 16px;
         }
-        .tab:hover {
-            background-color: #f0f0f0;
-        }
-        .active-tab {
-            font-weight: bold;
-            border-bottom: 2px solid #007bff;
+        .tabs button:hover {
+            background-color: #0056b3;
         }
         .tab-content {
             display: none;
+            text-align: center;
             width: 100%;
             max-width: 600px;
-            margin: 20px auto;
+            padding: 20px;
+            box-sizing: border-box;
         }
-        .show {
+        .tab-content.active {
             display: block;
         }
-        .info-link {
-            color: #007bff;
-            text-decoration: none;
+        .device-info {
+            font-size: 16px;
+            color: #333;
         }
-        .info-link:hover {
-            text-decoration: underline;
+        .settings-item {
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="tab-content jailbreak show">
+    <div id="tab-jailbreak" class="tab-content active">
         <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2369.jpeg" alt="Logo de l'application">
         <div class="text">Jailbreak for iOS/iPadOS 12.0-18.x beta</div>
         <button id="jailbreakButton">Jailbreak</button>
         <div class="progress-container" id="progressContainer">
             <div class="progress-bar" id="progressBar"></div>
         </div>
-        <div class="status-message" id="statusMessage">To start, click on the "Jailbreak" button ! For more info consult the Wiki !</div>
+        <div class="status-message" id="statusMessage">To start, click on the "Jailbreak" button! For more info consult the Wiki!</div>
         <div class="status-message hidden" id="installCydiaMessage">
             <button id="installCydiaButton">Reboot</button>
         </div>
@@ -162,37 +157,78 @@
             <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2379.jpeg" alt="Logo">
         </div>
     </div>
-    
-    <div class="tab-content settings hidden">
-        <div class="text">Settings will be available in future updates.</div>
+
+    <div id="tab-settings" class="tab-content">
+        <div class="settings-item hidden" id="checkm8Setting">
+            <label>
+                <input type="checkbox" id="checkm8Checkbox"> Use checkm8 exploit
+            </label>
+        </div>
+        <!-- D'autres paramètres peuvent être ajoutés ici à l'avenir -->
     </div>
-    
-    <div class="tab-content info hidden">
-        <div class="text">Bootloader version: 0.9.1<br>App version: 1.1</div>
-        <a href="https://github.com/BananeRapeuse/tfjailbreak.github.io/tree/main/Wiki" class="info-link" target="_blank">Wiki</a>
+
+    <div id="tab-info" class="tab-content">
+        <div class="device-info" id="deviceInfo"></div>
+        <div>Bootloader version: 0.9.1</div>
+        <div>App version: 1.1</div>
+        <div><a href="https://github.com/BananeRapeuse/tfjailbreak.github.io/tree/main/Wiki" target="_blank">Wiki</a></div>
     </div>
-    
+
     <div class="tabs">
-        <div class="tab active-tab" data-tab="jailbreak">Jailbreak</div>
-        <div class="tab" data-tab="settings">Settings</div>
-        <div class="tab" data-tab="info">Info</div>
+        <button onclick="showTab('jailbreak')">Jailbreak</button>
+        <button onclick="showTab('settings')">Settings</button>
+        <button onclick="showTab('info')">Info</button>
     </div>
 
     <script>
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active-tab'));
-                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('show'));
-
-                this.classList.add('active-tab');
-                const tabContentId = this.getAttribute('data-tab');
-                document.querySelector(`.${tabContentId}`).classList.add('show');
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
             });
+            document.getElementById('tab-' + tabName).classList.add('active');
+        }
+
+        function detectDevice() {
+            let deviceInfo = 'Unknown Device';
+            let userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            let iOSVersion = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
+            let version = '';
+
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                if (iOSVersion) {
+                    version = `${iOSVersion[1]}.${iOSVersion[2]}.${iOSVersion[3] || 0}`;
+                }
+                if (userAgent.includes("iPhone")) {
+                    deviceInfo = `iPhone ${version}`;
+                } else if (userAgent.includes("iPad")) {
+                    deviceInfo = `iPad ${version}`;
+                } else if (userAgent.includes("iPod")) {
+                    deviceInfo = `iPod Touch ${version}`;
+                }
+            }
+
+            return deviceInfo;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const deviceInfoElement = document.getElementById('deviceInfo');
+            const deviceInfo = detectDevice();
+            deviceInfoElement.textContent = deviceInfo;
+
+            const checkm8Setting = document.getElementById('checkm8Setting');
+            if (deviceInfo.includes("iPhone") || deviceInfo.includes("iPad")) {
+                const deviceMatch = deviceInfo.match(/iPhone (\d+)/);
+                const deviceModel = deviceMatch ? parseInt(deviceMatch[1]) : null;
+
+                if (deviceModel && deviceModel >= 6 && deviceModel <= 10) {
+                    checkm8Setting.classList.remove('hidden');
+                }
+            }
         });
 
         document.getElementById('jailbreakButton').addEventListener('click', function() {
             this.style.display = 'none';
-            const progressContainer = document.getElementById('progressContainer');
+                        const progressContainer = document.getElementById('progressContainer');
             const statusMessage = document.getElementById('statusMessage');
             const installCydiaMessage = document.getElementById('installCydiaMessage');
             progressContainer.style.display = 'block';
@@ -232,7 +268,7 @@
             runProgress();
         });
 
-                document.getElementById('installCydiaButton').addEventListener('click', function() {
+        document.getElementById('installCydiaButton').addEventListener('click', function() {
             this.style.display = 'none';
             const installCydiaMessage = document.getElementById('installCydiaMessage');
             const statusMessage = document.getElementById('statusMessage');
