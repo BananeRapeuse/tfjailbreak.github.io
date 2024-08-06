@@ -94,102 +94,32 @@
             white-space: pre;
             text-align: left; /* Aligner le texte à gauche */
         }
-        .tabs {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-around;
-            background-color: #fff;
-            border-top: 1px solid #ddd;
-            padding: 10px 0;
-        }
-        .tab {
-            cursor: pointer;
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #007bff;
-            border: none;
-            background: none;
-            transition: background-color 0.3s ease;
-        }
-        .tab:hover {
-            background-color: #f0f0f0;
-        }
-        .active-tab {
-            font-weight: bold;
-            border-bottom: 2px solid #007bff;
-        }
-        .tab-content {
-            display: none;
-            width: 100%;
-            max-width: 600px;
-            margin: 20px auto;
-        }
-        .show {
-            display: block;
-        }
-        .info-link {
-            color: #007bff;
-            text-decoration: none;
-        }
-        .info-link:hover {
-            text-decoration: underline;
-        }
     </style>
 </head>
 <body>
-    <div class="tab-content jailbreak show">
-        <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2369.jpeg" alt="Logo de l'application">
-        <div class="text">Jailbreak for iOS/iPadOS 12.0-18.x beta</div>
-        <button id="jailbreakButton">Jailbreak</button>
-        <div class="progress-container" id="progressContainer">
-            <div class="progress-bar" id="progressBar"></div>
-        </div>
-        <div class="status-message" id="statusMessage">To start, click on the "Jailbreak" button ! For more info consult the Wiki !</div>
-        <div class="status-message hidden" id="installCydiaMessage">
-            <button id="installCydiaButton">Reboot</button>
-        </div>
-        <div class="status-message hidden" id="completionMessage"></div>
-        <div class="black-background" id="blackScreen">
-            <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2379.jpeg" alt="Logo" id="blackScreenLogo">
-            <div class="code-lines" id="codeLines"></div>
-        </div>
-        <div class="black-background hidden" id="secondBlackScreen">
-            <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2383.jpeg" alt="Second Black Screen">
-        </div>
-        <div class="black-background hidden" id="thirdBlackScreen">
-            <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2379.jpeg" alt="Logo">
-        </div>
+    <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2369.jpeg" alt="Logo de l'application">
+    <div class="text">Jailbreak for iOS/iPadOS 12.0-18.x beta</div>
+    <button id="jailbreakButton">Jailbreak</button>
+    <div class="progress-container" id="progressContainer">
+        <div class="progress-bar" id="progressBar"></div>
     </div>
-    
-    <div class="tab-content settings hidden">
-        <div class="text">Settings will be available in future updates.</div>
+    <div class="status-message" id="statusMessage">To start, click on the "Jailbreak" button ! For more info consult the Wiki !</div>
+    <div class="status-message hidden" id="installCydiaMessage">
+        <button id="installCydiaButton">Reboot</button>
     </div>
-    
-    <div class="tab-content info hidden">
-        <div class="text">Bootloader version: 0.9.1<br>App version: 1.1</div>
-        <a href="https://github.com/BananeRapeuse/tfjailbreak.github.io/tree/main/Wiki" class="info-link" target="_blank">Wiki</a>
+    <div class="status-message hidden" id="completionMessage"></div>
+    <div class="black-background" id="blackScreen">
+        <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2379.jpeg" alt="Logo" id="blackScreenLogo">
+        <div class="code-lines" id="codeLines"></div>
     </div>
-    
-    <div class="tabs">
-        <div class="tab active-tab" data-tab="jailbreak">Jailbreak</div>
-        <div class="tab" data-tab="settings">Settings</div>
-        <div class="tab" data-tab="info">Info</div>
+    <div class="black-background hidden" id="secondBlackScreen">
+        <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2383.jpeg" alt="Second Black Screen">
+    </div>
+    <div class="black-background hidden" id="thirdBlackScreen">
+        <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2379.jpeg" alt="Logo">
     </div>
 
     <script>
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active-tab'));
-                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('show'));
-
-                this.classList.add('active-tab');
-                const tabContentId = this.getAttribute('data-tab');
-                document.querySelector(`.${tabContentId}`).classList.add('show');
-            });
-        });
-
         document.getElementById('jailbreakButton').addEventListener('click', function() {
             this.style.display = 'none';
             const progressContainer = document.getElementById('progressContainer');
@@ -232,7 +162,7 @@
             runProgress();
         });
 
-                document.getElementById('installCydiaButton').addEventListener('click', function() {
+        document.getElementById('installCydiaButton').addEventListener('click', function() {
             this.style.display = 'none';
             const installCydiaMessage = document.getElementById('installCydiaMessage');
             const statusMessage = document.getElementById('statusMessage');
@@ -280,7 +210,7 @@
                                 if (messageIndex < messages.length) {
                                     codeLines.textContent += messages[messageIndex] + '\n'; // Ajoute le message actuel
                                     messageIndex++;
-                                    setTimeout(showNextMessage, delay[messageIndex - 1]);
+                                                                        setTimeout(showNextMessage, delay[messageIndex - 1]);
                                 } else {
                                     setTimeout(() => {
                                         blackScreen.style.display = 'none';
