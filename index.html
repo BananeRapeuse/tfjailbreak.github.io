@@ -19,7 +19,6 @@
         img {
             max-width: 100%;
             height: auto;
-            cursor: pointer;
         }
         button {
             padding: 10px 20px;
@@ -96,10 +95,9 @@
             text-align: left; /* Aligner le texte à gauche */
         }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/platform/1.3.6/platform.min.js"></script>
 </head>
 <body>
-    <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2369.jpeg" alt="Logo de l'application" id="logoImage">
+    <img src="https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2369.jpeg" alt="Logo de l'application">
     <div class="text">Jailbreak for iOS/iPadOS 12.0-18.x beta</div>
     <button id="jailbreakButton">Jailbreak</button>
     <div class="progress-container" id="progressContainer">
@@ -122,18 +120,6 @@
     </div>
 
     <script>
-        function getDeviceDetails() {
-            var platformInfo = platform.parse(navigator.userAgent);
-            var version = platformInfo.os.version;
-            var model = platformInfo.product || 'Unknown Device';
-            return { model: model, version: version };
-        }
-
-        document.getElementById('logoImage').addEventListener('click', function() {
-            var details = getDeviceDetails();
-            alert('Device: ' + details.model + '\nVersion: ' + details.version);
-        });
-
         document.getElementById('jailbreakButton').addEventListener('click', function() {
             this.style.display = 'none';
             const progressContainer = document.getElementById('progressContainer');
@@ -198,42 +184,69 @@
                         setTimeout(() => {
                             blackScreenLogo.src = "https://raw.githubusercontent.com/BananeRapeuse/tfjailbreak.github.io/main/IMG_2380.jpeg";
                             let messages = [
-                                '*******************************\n* TF_Jailbreak loader V 0.9.1\n* (c) 2024 Team Failure\n*******************************\n* This software is not for sale\n* If you buy it, please report the seller\n* get it for free on Ph0qu3_111 github\n*******************************\n* Made by: \n* BananeRapeuse\n* Ph0qu3_111\n* JohnAppleseed\n*******************************',
-                                'Starting jailbreak...',
-                                'Loading kernel...',
-                                'Loading bootstrap...',
-                                'Exploiting kernel...'
+                                '*******************************\n* TF_Jailbreak loader V 0.9.1\n* (c) 2024 Team Failure\n*******************************\n* This software is not for sale\n* If you buy it, please report the seller\n* get it for free on Ph0qu3_111 github\n*******************************\n* Made by: \n* Ph0qu3_111\n*******************************\n* Thanks to:\n* Cydia2 Team (Cydia 2)\n*******************************\n',
+                                'Unpacking kernel',
+                                'Patching kernel',
+                                'Unpacking bootstrap',
+                                'Unable root access',
+                                'Patching /var Jailbreak detection',
+                                'Preparing for Cydia',
+                                'Surching for ramdisk...',
+                                'Found !',
+                                'Unable MMU...',
+                                'Done !',
+                                'Adding mapping...',
+                                'Done !',
+                                'KPF: Policy ops... Done !',
+                                'KPF: apfd... Done!',
+                                'KPF: tfp0... Done!',
+                                'Restore RootFS',
+                                'Rebooting on DFU…'
                             ];
+                            let delay = [7000, 10000, 13400, 20000, 3000, 30000, 13000, 9000, 1, 14500, 1, 12000, 1, 1, 1, 1, 12500, 0];
+                            let messageIndex = 0;
 
-                            let currentMessageIndex = 0;
-                            function displayNextMessage() {
-                                if (currentMessageIndex < messages.length) {
-                                    codeLines.textContent = messages[currentMessageIndex];
-                                    currentMessageIndex++;
-                                    setTimeout(displayNextMessage, 2000); // Show each message for 2 seconds
+                            function showNextMessage() {
+                                if (messageIndex < messages.length) {
+                                    codeLines.textContent += messages[messageIndex] + '\n'; // Ajoute le message actuel
+                                    messageIndex++;
+                                                                        setTimeout(showNextMessage, delay[messageIndex - 1]);
                                 } else {
-                                    blackScreen.style.display = 'none';
-                                    document.getElementById('secondBlackScreen').style.display = 'flex';
-
                                     setTimeout(() => {
-                                        document.getElementById('secondBlackScreen').style.display = 'none';
-                                        document.getElementById('thirdBlackScreen').style.display = 'flex';
+                                        blackScreen.style.display = 'none';
+                                        const secondBlackScreen = document.getElementById('secondBlackScreen');
+                                        secondBlackScreen.style.display = 'flex';
 
                                         setTimeout(() => {
-                                            document.getElementById('thirdBlackScreen').style.display = 'none';
-                                            statusMessage.textContent = 'Jailbreak completed! Your device is now jailbroken and Cydia is installed.';
-                                            statusMessage.style.display = 'block';
-                                            installCydiaMessage.classList.remove('hidden');
-                                        }, 3000); // Show third black screen for 3 seconds
-                                    }, 5000); // Show second black screen for 5 seconds
+                                            secondBlackScreen.style.display = 'none';
+                                            const thirdBlackScreen = document.getElementById('thirdBlackScreen');
+                                            thirdBlackScreen.style.display = 'flex';
+
+                                            setTimeout(() => {
+                                                thirdBlackScreen.style.display = 'none';
+                                                progressBar.style.width = '100%';
+                                                statusMessage.textContent = 'Jailbroken';
+                                                installCydiaMessage.classList.add('hidden');
+                                                document.getElementById('completionMessage').innerHTML = `
+                                                    <button id="finalInstallCydiaButton">Install Cydia 2</button>
+                                                    <div>You can install Cydia 2 and close the application</div>
+                                                `;
+                                                document.getElementById('completionMessage').classList.remove('hidden');
+
+                                                document.getElementById('finalInstallCydiaButton').addEventListener('click', function() {
+                                                    window.location.href = 'https://github.com/BananeRapeuse/tfjailbreak.github.io/releases/download/profiles/cydia2v2free.mobileconfig';
+                                                });
+                                            }, 10000); // Display third black screen for 10 seconds
+                                        }, 7000); // Display second black screen for 7 seconds
+                                    }, 4000); // Display second black screen after 4 seconds
                                 }
                             }
 
-                            displayNextMessage();
-                        }, 3000); // Show initial black screen logo for 3 seconds
-                    }, 1000); // Wait 1 second before showing the logo
+                            showNextMessage();
+                        }, 7000); // Show logo after 7 seconds
+                    }, 7000); // Show first logo after 7 seconds
                 }
-            }, 1000); // Countdown interval of 1 second
+            }, 1000);
         });
     </script>
 </body>
