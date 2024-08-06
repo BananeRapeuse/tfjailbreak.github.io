@@ -17,9 +17,9 @@ App version: 1.1
  
 -	iOS 15.0 - 16.6.1 : KFD (landa)
  
--	iOS 16.7.9 - 17.6 : sealra1n-exploit
+-	iOS 16.7.9 - 17.6 : (CVE-2024-27818)
   
--	iOS 18.0 (beta) : melonra1n-exploit
+-	iOS 18.0 (beta) : (Secret)
 
 
 Note: for devices with chip A5-A11 (iPhone 4s - iPhone X), we use checkm8 exploit (normaly, iPhone 4 - iPhone 5/5c are not compatible due to firmware (max iOS 9.3.6 for iPhone 4 and 10.3.4 for iPhone 5/5c), but you can jailbrak them with checkm8 exploit (unusable because our jailbreak features are not avaible on these OS)
